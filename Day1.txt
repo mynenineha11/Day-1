@@ -1,0 +1,263 @@
+# swapping 2 no wothout temp 
+a=1
+b=2
+a,b=b,a
+print(a)
+print (b)
+
+# 2) check no is even / odd
+num=int(input("enter the number"))
+if(num & 1)==0:
+    print("even")
+else:
+    print("odd")
+    
+# 3) find the xor of 1- n
+num=int(input("enter the number"))
+if num%4==0:
+    print(num)
+if num%4==1:
+    print(1)
+if num%4==2:
+    print(num+1)
+if num%4==3:
+    print(0)
+    
+# 4) FIZZBUZZ
+a=int(input("enter the number"))
+if (a%3==0)&(a%5==0):
+    print("fizzbuzz")
+elif a%3==0:
+    print("fizz")
+elif a%5==0:
+    print("buzz")
+    
+# 5) watermelon (coedforces)
+w=int(input("enter the total weight of water melon"))
+if w%2==0 & w>2:
+    x=w//2
+    if x%2==0:
+        print(x,x)
+    else:
+        print(x-1,x+1)
+else:
+    print("NO")
+
+# 6) Elephant problem (codeforces)
+num=int(input("enter the number"))
+if num%5==0:
+    x=num//5
+    print(x)
+elif num%5!=0:
+    x=num//5
+    print(x+1)
+    
+# 7)prime
+n=int(input("enter the number"))
+flag=0
+for i in range (2,n+1):
+    if n%i==0:
+        flag+=1    
+if flag==0:
+    print(i,"prime")
+else:
+    print(i," is not prime")
+    
+# 8) check wheather a given intgere is perfect nnumber or not
+n=int(input("enter the number"))
+sum=0
+for i in range (1,n):
+    if n%i==0:
+        sum +=i
+if sum==n:
+    print(n,"is a perfect number")
+else:
+    print(n,"is a not perfect number")
+
+# 9) bear and bigg brother problem (codeforces)
+count=0
+limak=int(input("enter the weight of limak:"))
+bob=int(input("enter the weight of bob:"))
+limak,bob=map(int,input("enter:").split())
+while(limak<=bob):
+    bob=bob*2
+    limak=limak*3
+    count+=1
+print(count)
+
+# 10) reverse the number
+n=int(input("enter the number"))
+rev=0
+while n>0:
+    d=n%10
+    rev=rev*10+d
+    n=n//10
+print(rev)
+
+# 11) check weather a  number is magic number
+num=int(input("enter the number"))
+
+while num>9:
+    sum=0
+    while num>0:
+        d=num%10
+        sum +=d
+        num=num//10
+    num=sum
+if num==1:
+    print('magic number')
+else:
+    print ("not magic number") 
+
+# 12) strong number
+def factorial(n):
+    if n==0 or n==1:
+        return 1
+    else:
+        return n*factorial(n-1)
+def get_digit(num):
+    if num ==0:
+        return 0
+    
+    d=num%10
+    return factorial(d)+get_digit(num//10)
+    
+number=145
+if get_digit(number):
+    print("strong numbr")
+else:
+    print("not strognumber")
+
+# 13) automorphic number
+
+num=int(input("enter the number"))
+n=len(str(num))
+sqr=num**2
+ladig=abs(sqr)%(10**n)
+if num==ladig:
+    print ("automorphic")
+else:
+    print("not automorphic")
+    
+# 14) power of 2 number
+n=int(input("enter the number"))
+if n>0 and (n&(n-1)):
+    print(" not power of 2")
+else:
+    print (" power of 2")
+
+# 15) count a no of 1 bit in binary 
+num=int(input("enter the number"))
+count=0
+while num>0:
+    num=num&(num-1)
+    count+=1
+print(count)
+
+# 16) ith posituon of a  binary is 1 
+num=int(input("enter the number"))
+pos=int(input("enter the position"))
+if (num>>pos)&1:
+    print("its set bit")
+else:
+    print("its not set bit")
+    
+# 17) xor from left to right
+def xor(num):
+
+    if num%4==0:return(num)
+    if num%4==1:return(1)
+    if num%4==2:return(num+1)
+    if num%4==3:return(0)
+    
+def find_xoc(l,r):
+    return xor(r)^xor(l-1)
+
+l=int(input("enter the left range"))
+r=int(input("enter the right range"))
+print(find_xoc(l,r))
+
+# 17) print star on 4*4 matrix
+for i in range (4):
+    print("*" *4)
+
+# 18) right triangle star matrix
+num=5
+for i in range (1,num+1):
+    print(" "*(num-i),"*" *i)
+
+# 19) left triangle star matrix
+num=5
+for i in range (1,num+1):
+    print("*" *i)
+
+# 20) break and contiue statement
+for i in range(1,6):
+    if i==3:
+        continue
+    print("continue:",i)
+for i in range(1,6):
+    if i==3:
+        break
+    print("break:",i)
+
+for i in range(1,5):
+    for j in range(1,5):
+        if j==3:
+            break
+        print(i,j)
+for i in range(5):
+    if i>3:
+        break
+    print(i)
+
+#  21) end border matrix star 
+n=5
+for i in range (n):
+    for j in range(n):
+        if i==0 or i==n-1 or j==0 or j==n-1:
+            print("*",end="")
+        else:
+            print(" ",end="")
+    print()
+
+# 22) printing number inside the border star 
+n=4
+count=1
+for i in range (n):
+    for j in range(n):
+        if i==0 or i==n-1 or j==0 or j==n-1:
+            print("*",end="")
+        else:
+            
+            print(count,end="")
+            count+=1
+    print()
+
+# 23) reverse right triangle
+num=5
+for i in range (num,0,-1):
+    print(" "*(num-i),"*" *i)
+
+# 24) reverse left triangle
+num=5
+for i in range (num,0,-1):
+    print("*" *i)
+
+# 25) police recruits problem (Codeforces)
+n=int(input("enter the numnber"))
+events=list(map(int,input("enter the list").split()))
+officer=0
+untreated=0
+for e in events:
+    if e==-1:
+        if officer>0:
+            officer==-1
+        else:
+            untreated+=1
+    else:
+        officer+=e
+
+print(untreated)
+
+

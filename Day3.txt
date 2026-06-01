@@ -1,0 +1,279 @@
+# 860. Lemonade Change (Leetcode)
+class Solution(object):
+    def lemonadeChange(self, bills):
+        """
+        :type bills: List[int]
+        :rtype: bool
+        """
+        f = 0
+        t = 0
+
+        for bill in bills:
+            if bill == 5:
+                f += 1
+            elif bill == 10:
+                if f == 0:
+                    return False
+
+                f -= 1
+                t += 1
+
+            else:
+                if t > 0 and f > 0:
+                    t -= 1
+                    f -= 1
+                elif f >= 3:
+                    f -= 3
+                else:
+                    return False
+
+        return True
+
+# 27. Remove Element (Leetcode)
+class Solution(object):
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        k = 0
+        for i in range(len(nums)):
+            if nums[i] != val:
+                nums[k] = nums[i]
+                k += 1
+        return k
+
+# 26. Remove Duplicates from Sorted Array (Leetcode)
+class Solution(object):
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        k = 1
+        for i in range(1, len(nums)):
+            if nums[i] != nums[k-1]:
+                nums[k] = nums[i]
+                k += 1
+        return k
+
+# 66. Plus One (Leetcode)
+class Solution(object):
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+    
+        num = 0
+
+        for d in digits:
+            num = num * 10 + d
+
+        num += 1
+
+        result = []
+
+        while num > 0:
+            result.append(num % 10)
+            num //= 10
+
+        result.reverse()
+        return result
+
+# 268. Missing Number (Leetcode)
+class Solution(object):
+    def missingNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        n = len(nums)
+
+        list_sum = n * (n + 1) // 2
+        total_real = sum(nums)
+
+        return list_sum - total_real
+
+# 136. Single Number (Leetcode)
+class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        result = 0
+
+        for num in nums:
+            result ^= num
+
+        return result
+
+# 1720. Decode XORed Array (Leetcode)
+class Solution(object):
+    def decode(self, encoded, first):
+        """
+        :type encoded: List[int]
+        :type first: int
+        :rtype: List[int]
+        """
+        arr = [first]
+        for n in encoded:
+            arr.append(arr[-1]^n)
+
+        return arr
+
+# 121. Best Time to Buy and Sell Stock (Leetcode)
+class Solution(object):
+    def maxProfit(self, prices):
+
+        min = prices[0]
+        max = 0
+
+        for p in prices:
+
+            if p < min:
+                min = p
+
+            p = p - min
+
+            if p > max:
+                max = p
+
+        return max
+
+# 1470. Shuffle the Array (Leetcode)
+class Solution(object):
+    def shuffle(self, nums, n):
+        """
+        :type nums: List[int]
+        :type n: int
+        :rtype: List[int]
+        """
+        res = []
+        for i in range(n):
+            res.append(nums[i])
+            res.append(nums[i+n])
+
+        return res
+
+# 594. Longest Harmonious Subsequence (Leetcode)
+class Solution(object):
+    def findLHS(self, nums):
+        d = {}
+        for i in nums:
+            d[i] = d.get(i, 0) + 1
+        ans = 0
+        for k in d:
+            if k + 1 in d:
+                ans = max(ans, d[k] + d[k + 1])
+        return ans
+
+# 13. Roman to Integer (Leetcode)
+class Solution(object):
+    def romanToInt(self, s):
+        d = {
+            'I': 1,
+            'V': 5,
+            'X': 10,
+            'L': 50,
+            'C': 100,
+            'D': 500,
+            'M': 1000
+        }
+
+        ans = 0
+        for i in range(len(s) - 1):
+            if d[s[i]] < d[s[i + 1]]:
+                ans -= d[s[i]]
+            else:
+                ans += d[s[i]]
+
+        ans += d[s[-1]]
+
+        return ans
+
+# Second largest number in list
+nums = [10, 5, 20, 8, 15]
+
+largest = nums[0]
+second = nums[0]
+
+for num in nums:
+
+    if num > largest:
+        second = largest
+        largest = num
+
+    elif num > second and num != largest:
+        second = num
+
+print(second)
+
+# match stick problem
+count = [6, 2, 5, 5, 4, 5, 6, 3, 7, 6]
+
+num1 = int(input("num1:" ))
+num2 = int(input("num2:" ))
+sum = num1 + num2
+print(sum)
+match = 0
+while sum > 0:
+    d = sum % 10
+    match += count[d]
+    sum = sum // 10
+
+print(match)
+
+# Calculate grades WRT the marks given in the DICT
+marks = {
+    "Rahul": 85,
+    "Priya": 92,
+    "Amit": 78,
+    "Sneha": 88,
+    "Kiran": 95
+}
+grades = {}
+for name, mark in marks.items():
+    if mark >= 90:
+        grades[name] = "A"
+    elif mark >= 80:
+        grades[name] = "B"
+    elif mark >= 70:
+        grades[name] = "C"
+    else:
+        grades[name] = "D"
+print(grades)
+
+# Second most frequent element
+arr = [1, 2, 3, 2, 4, 2, 5, 1]
+d = {}
+for i in arr:
+    d[i] = d.get(i, 0) + 1
+
+f1 = f2 = 0
+e1 = e2 = None
+for k in d:
+    if d[k] > f1:
+        f2 = f1
+        e2 = e1
+        f1 = d[k]
+        e1 = k
+    elif d[k] > f2:
+        f2 = d[k]
+        e2 = k
+print(e2)
+
+# Finding Most repeated element in the array using Dict
+arr = [1, 2, 3, 2, 4, 2, 5, 1]
+d = {}
+for i in arr:
+    d[i] = d.get(i, 0) + 1
+max_count = 0
+ans = None
+for key in d:
+    if d[key] > max_count:
+        max_count = d[key]
+        ans = key
+print(ans)

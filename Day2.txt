@@ -1,0 +1,127 @@
+# Recursion Demo code with limit
+import sys
+sys.setrecursionlimit(3000)
+def qury(x):
+    print(x,"hi")
+    return 30
+c= qury(10)+600
+print (c)
+
+# 2) printing numbers from 1 to n
+def fun(n):
+    if n==0:
+        return
+    print(n,end=" ") 
+    fun(n-1)
+    if n!=1:
+        print(n,end=" ")
+n=int(input("enter the numner "))
+fun(n)
+
+# 3) factorial recusion
+def factorial(n):
+    if n==0 or n==1:
+        return 1
+    else:
+        return n*factorial(n-1)
+n=int(input("enter the value of n:"))
+sq=factorial(n)
+print(sq)
+
+# 4) perfect sqaure
+def pef(n, i=1):
+    if i*i==n:
+        return True
+    elif i*i<n:
+        return pef(n,i+1)
+    elif i*i>n:
+        return False
+n=int(input("enter the value of n:"))
+ab=pef(n)
+print(ab)
+
+# 5) power of 2
+def power(a,b):
+    if b==0:
+        return 1
+    return a*power(a,b-1)
+a=int(input("enter the value of a:"))
+b=int(input("enter the value of b:"))
+ab=power(a,b)
+print(ab)
+
+# 6) reduce to 1 (geeks for geeks)
+def reduce(num):
+    if num==1:
+        return 0
+    elif num%2==0:
+        return 1+reduce(num//2)
+    else:
+        return 1+min(reduce(num-1),reduce(num+1))
+n=int(input("enter the value of b:"))
+print(reduce(n))
+
+# list slicing
+l=[1,2,3,4,5,6,7,8,9]
+print(l[:5])
+print(l[::-1])
+print(l[:8:2])
+
+# 7) printing unique elements in a list without using set
+l=[1,2,3,4,5,6,7,8,9,1,2,3]
+s=[]
+for i in l:
+    if i not in s:
+        s.append(i)
+print(s)
+
+# 8) find the number which got repeated for the odd number of times
+l=[1,2,1,2,2,3,5,6,6]
+s=[]
+for i in l:
+    if l.count(i)>1 and l.count(i)%2!=0:
+        if i not in s:
+            s.append(i)
+print(s)
+
+#  9) sort the list in unique way  even numbers in descending order and odd numbers in ascending order
+l = [1, 20, 5, 8, 7, 2, 4, 6]
+
+l = sorted([x for x in l if x % 2 == 0], reverse=True) + sorted([x for x in l if x % 2 != 0])
+print(l)
+
+# 10) move zeros
+class Solution(object):
+    def moveZeroes(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        count = nums.count(0)
+
+        for i in range(count):
+            nums.remove(0)
+            nums.append(0)
+            
+# 11) Running sum of 1D array
+class Solution(object):
+    def runningSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        for i in range(1, len(nums)):
+            nums[i] += nums[i-1]
+        
+        return nums
+
+# calculate A to the power of B
+def power(a, b):
+    if b == 0:
+        return 1
+    return a * power(a, b - 1)
+
+a = int(input())
+b = int(input())
+
+print(power(a, b))
