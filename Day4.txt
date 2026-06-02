@@ -1,0 +1,194 @@
+# 1. Two sum 
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        d = {}
+        rem = 0
+        for i in range(len(nums)):
+            rem = target - nums[i]
+
+            if rem in d:
+                return (d[rem], i)
+            
+            d[nums[i]] = i 
+
+# 169. Majority Element
+class Solution(object):
+    def majorityElement(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        key = None
+        count = 0
+
+        for num in nums:
+            if count == 0:
+                key = num
+
+            if num == key:
+                count += 1
+            else:
+                count -= 1
+
+        return key
+
+# 1207. Unique Number of Occurrences
+class Solution(object):
+    def uniqueOccurrences(self, arr):
+        """
+        :type arr: List[int]
+        :rtype: bool
+        """
+        d = {}
+        for i in arr:
+            d[i] = d.get(i, 0) + 1
+        
+        if len(d.values()) == len(set(d.values())):
+            return True
+        else:
+            return False
+
+# 532. K-diff Pairs in an Array
+class Solution(object):
+    def findPairs(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        if k < 0:
+            return 0
+
+        d = {}
+        for i in nums:
+            d[i] = d.get(i, 0) + 1
+
+        count = 0
+        
+        for key in d:
+            if k == 0:
+                if d[key] >= 2:
+                    count += 1
+                
+            elif key + k in d:
+                count += 1
+        
+        return count
+            
+# 1512. Number of Good Pairs
+class Solution(object):
+    def numIdenticalPairs(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        count = 0
+        for i in range(len(nums)):
+            for j in range(1, len(nums)):
+                if (nums[i] == nums[j]) and i < j:
+                    count += 1
+        return count
+                    
+# 697. Degree of an Array
+class Solution(object):
+    def findShortestSubArray(self, nums):
+
+        d = {}
+
+        for num in nums:
+            d[num] = d.get(num, 0) + 1
+
+        degree = max(d.values())
+        ans = len(nums)
+
+        for key in d:
+
+            if d[key] == degree:
+
+                first = 0
+                while nums[first] != key:
+                    first += 1
+
+                last = len(nums) - 1
+                while nums[last] != key:
+                    last -= 1
+
+                ans = min(ans, last - first + 1)
+
+        return ans
+
+# 128. Longest Consecutive Sequence
+class Solution(object):
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        s = set(nums)
+        l = 0
+        for num in s:
+            if num-1 not in s:
+                cur = num
+                len = 1
+                while cur+1 in s:
+                    cur += 1
+                    len += 1
+                l = max(l, len)
+
+        return l
+
+# 217. Contains Duplicate
+class Solution(object):
+    def containsDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        s = set()
+        for i in nums:
+            if i in s:
+                return True
+            else:
+                s.add(i)
+        return False
+
+# 202. Happy Number
+class Solution(object):
+    def isHappy(self, n):
+        s = set()
+        while n != 1 and n not in s:
+            s.add(n)
+            tot = 0
+            while n > 0:
+                d = n % 10
+                tot += d * d
+                n //= 10
+            n = tot
+        return n == 1
+
+# Find the max distance between the same element
+arr = [1,2,3,1,4,5,2]
+d = {}
+a = 0
+for i in range(len(arr)):
+    if arr[i] not in d:
+        d[arr[i]] = i
+    else:
+        a = max(a, i - d[arr[i]])
+print(a)
+
+# count distinct elements in every window(k)
+nums = [1,2,1,3,4,2,3]
+k=4
+lis = []
+for i in range(len(nums) - k + 1):
+        s = set()
+        for j in range(i, i + k):
+            s.add(nums[j])
+        lis.append(len(s))
+print(lis)
