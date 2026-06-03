@@ -1,0 +1,327 @@
+# unique fewquencies
+nums = list(map(int, input().split()))
+d={}
+u = {}
+for n in nums:
+    d[n] = d.get(n, 0) + 1
+for value in d.values():
+    u[value] = u.get(value, 0) + 1
+ans=-1
+for num in nums:
+    if u[d[num]] == 1:
+        ans=num
+        break
+print(ans)
+
+# Given a list of integers, find the first element such that: frequency(current_element) > sum of frequencies of all DISTINCT elements appearing after it
+nums = list(map(int, input().split()))
+freq = {}
+
+for num in nums:
+    freq[num] = freq.get(num, 0) + 1
+
+for i in range(len(nums)):
+    s = set()
+    Sum = 0
+    for j in range(i+1, len(nums)):
+        if num[i] != num[j] and nums[j] not in s:
+            Sum += freq[nums[j]]
+            s.add(nums[j])
+    
+    if freq[nums[i]] > Sum:
+        print(nums[i])
+        break
+else:
+    print(-1)
+    
+# strings in python
+s = "Sharvin"
+print(s.find('a'))
+print(s.index('e'))
+print(s.upper())
+print(s.lowre())
+
+s = "hi hello hey"
+print(s)
+print(s.replace('hi','bye')
+# isdigit, isnumeric, isalpha, isalnum, islower, isupper, isspace
+
+# string to a list
+s = "sharvin"
+l = list(s)
+print(l)
+
+# list to string
+print("".join)
+
+# concatination of sttring
+print("hi" + " " + s)
+
+#string slicing
+s = "aaaabbbbccc"
+print(s[1:5:2])
+
+s = "neha"
+s[0] = "m"
+print(s) # results in error cause string is immutable
+
+print(max("abc")) # output: c because of the ascii value
+
+# ascii value
+# for A to Z is 65 to 90
+# for a to z is 97 to 112
+
+# convert mixed chars to upper
+string = "HeLLo"
+low = ""
+for i in string:
+    asc = ord(i)
+    if 65 <= asc <= 90:
+        low += chr(asc + 32)
+
+    else:
+        low += i
+print(low)
+
+# converting lower to upper
+str = "hello"
+result = ""
+
+for char in str:
+    val = ord(char)
+    if 97 <= val <= 122:
+        result += chr(val - 32)
+    else:
+        result += char
+
+print(result)
+
+# count of vowels in a string
+string = "sharvin"
+vowels = "aeiouAEIOU"
+count = 0
+
+for char in string:
+    if char in vowels:
+        count += 1
+
+print(count)
+
+# Reversing a string without slicing
+# method 1:
+s = "hello"
+res = ""
+for i in range(len(s)-1, -1, -1):
+    res += s[i]
+print(res)
+
+# method 2:
+s = "hello"
+res = ""
+for i in range(len(s)):
+    res = s[i] + res
+print(res)
+
+# Reverse a string without changing the position special characters
+s = "a#bc$def*1234%#!"
+s = list(s)
+l = 0
+r = len(s) - 1
+while l < r:
+    if not s[l].isalnum():
+        l += 1
+    elif not s[r].isalnum():
+        r -= 1
+    else: 
+        s[l], s[r] = s[r], s[l]
+        l += 1
+        r -= 1
+print("".join(s))
+
+# 344. Reverse string (leetcode)
+class Solution(object):
+    def reverseString(self, s):
+        """
+        :type s: List[str]
+        :rtype: None Do not return anything, modify s in-place instead.
+        """
+        l = 0
+        r = len(s) - 1
+        while l < r:
+            s[l], s[r] = s[r], s[l]
+            l += 1
+            r -= 1
+        return s
+
+# 917. Reverse Only Letters
+class Solution(object):
+    def reverseOnlyLetters(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        s = list(s)
+        l = 0
+        r = len(s) - 1
+        while l < r:
+            if not s[l].isalpha():
+                l += 1
+            elif not s[r].isalpha():
+                r -= 1
+            else: 
+                s[l], s[r] = s[r], s[l]
+                l += 1
+                r -= 1
+        return ("".join(s))
+        
+# 345. Reverse Vowels of a String
+class Solution(object):
+    def reverseVowels(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        v = "aeiouAEIOU"
+        lis = list(s)
+        l = 0
+        r = len(lis) - 1
+        while l < r:
+            if lis[l] not in v:
+                l += 1
+            elif lis[r] not in v:
+                r -= 1
+            else:
+                lis[l], lis[r] = lis[r], lis[l]
+                l += 1
+                r -= 1
+        return ("".join(lis))
+
+# 125. Valid Palindrome
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        s = s.lower()
+        res = ""
+        for char in s:
+            if char.isalnum():
+                res += char
+        if (res == (res[::-1])):
+            return True
+        else:
+            return False
+
+# 387. First Unique Character in a String
+class Solution(object):
+    def firstUniqChar(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        d={}
+        for ch in s:
+            d[ch] = d.get(ch, 0) + 1
+
+        for i in range(len(s)):
+            if d[s[i]] == 1:
+                return i
+
+        return -1
+
+# 58. Length of Last Word
+class Solution(object):
+    def lengthOfLastWord(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        s = s.strip()
+        c = 0
+        for i in range(len(s)-1, -1, -1):
+            if s[i]!=" ":
+                c += 1
+            else:
+                break
+        return c
+
+# 242. Valid Anagram
+class Solution(object):
+    def isAnagram(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        if len(s) != len(t):
+            return False
+
+        d = {}
+
+        for ch in s:
+            d[ch] = d.get(ch, 0) + 1
+
+        for ch in t:
+            if ch not in d:
+                return False
+
+            d[ch] -= 1
+
+            if d[ch] < 0:
+                return False
+
+        return True
+
+# 1832. Check if the Sentence Is Pangram
+class Solution(object):
+    def checkIfPangram(self, sentence):
+        """
+        :type sentence: str
+        :rtype: bool
+        """
+        l = set(re.findall(r'[a-z]', sentence))
+
+        if len(l) == 26:
+            return True
+        else:
+            return False
+
+# find longest word in a sentence 
+s = "i am learning DSA"
+c = 0
+max_c = 0
+for ch in s:
+    if ch != " ":
+        c += 1
+    else:
+        if c > max_c:
+            max_c = c
+        c = 0
+if c > max_c:
+    max_c = c
+print(max_c)
+
+# 680. Valid Palindrome II
+class Solution(object):
+    def validPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        left = 0
+        right = len(s) - 1
+
+        while left < right:
+
+            if s[left] != s[right]:
+
+                a = s[left+1:right+1]
+                b = s[left:right]
+
+                return a == a[::-1] or b == b[::-1]
+
+            left += 1
+            right -= 1
+
+        return True
