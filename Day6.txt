@@ -1,0 +1,227 @@
+# 680. Valid Palindrome II
+class Solution(object):
+    def validPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        left = 0
+        right = len(s) - 1
+
+        while left < right:
+
+            if s[left] != s[right]:
+
+                a = s[left+1:right+1]
+                b = s[left:right]
+
+                return a == a[::-1] or b == b[::-1]
+
+            left += 1
+            right -= 1
+
+        return True
+
+#string compression
+s = input()
+count = 1
+res = ""
+for i in range(1, len(s)):
+    if s[i] == s[i-1]:
+        count += 1
+    else:
+        res += s[i-1] + str(count)
+        count = 1
+
+res += s[-1] + str(count)
+
+if len(res) < len(s):
+    print(res)
+else:
+    print(s)
+
+# string decryption
+s = input()
+k = int(input())
+res = ""
+for ch in s:
+    p = ord(ch) - ord('a')
+    p = (p - k) % 26
+    res += chr(p + ord('a'))
+
+print(res)
+
+# 205. Isomorphic Strings
+class Solution(object):
+    def isIsomorphic(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        d1 = {}
+        d2 = {}
+        for i in range(len(s)):
+            if s[i] in d1:
+                if d1[s[i]] != t[i]:
+                    return False
+            else:
+                d1[s[i]] = t[i]
+            
+            if t[i] in d2:
+                if d2[t[i]] != s[i]:
+                    return False
+            else:
+                d2[t[i]] = s[i]
+        return True
+
+# 824. Goat Latin
+class Solution:
+    def toGoatLatin(self, sentence: str) -> str:
+        words = sentence.split()
+        res = ""
+        vowels = "aeiouAEIOU"
+        for i, word in enumerate(words, 1):
+            if word[0] in vowels:
+                res += word + "ma"
+            else:
+                res += word[1:] + word[0] + "ma"
+            res += "a" * i
+
+            if i != len(words):
+                res += " "
+        return res
+
+# 1768. Merge Strings Alternately
+class Solution:
+    def mergeAlternately(self, word1: str, word2: str) -> str:
+        res = ""
+        i = 0
+        j = 0
+        while i < len(word1) and j < len(word2):
+             res += word1[i]
+             res += word2[j]
+             i += 1
+             j += 1
+
+        res += word1[i:]
+        res += word2[j:]
+
+        return res
+        
+# 383. Ransom Note
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        d = {}
+
+        for ch in magazine:
+            d[ch] = d.get(ch, 0) + 1
+        
+        for ch in ransomNote:
+            if (ch not in d) or (d[ch] == 0):
+                return False
+            
+            d[ch] -= 1
+        
+        return True
+
+# 389. Find the Difference
+# Method 1:
+class Solution:
+    def findTheDifference(self, s: str, t: str) -> str:
+        for ch in set(t):
+            if s.count(ch) != t.count(ch):
+                return ch
+# Method 2:
+class Solution:
+    def findTheDifference(self, s: str, t: str) -> str:
+        r=0
+        for char in s:
+            r^=ord(char)
+        for char in t:
+            r^=ord(char)
+        return chr(r)
+        
+# 3120. Count the Number of Special Characters I
+class Solution:
+    def numberOfSpecialChars(self, word: str) -> int:
+        s = set(word)
+        c = 0
+        for ch in s:
+            if ch.islower() and ch.upper() in s:
+                c += 1
+        return c
+
+# 5. Longest Palindromic Substring
+class Solution(object):
+    def longestPalindrome(self, s):
+
+        res = ""
+
+        for i in range(len(s)):
+
+            left = i
+            right = i
+
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+
+                if right - left + 1 > len(res):
+                    res = s[left:right+1]
+
+                left -= 1
+                right += 1
+
+            left = i
+            right = i + 1
+
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+
+                if right - left + 1 > len(res):
+                    res = s[left:right+1]
+
+                left -= 1
+                right += 1
+
+        return res
+
+# 290. Word Pattern
+class Solution(object):
+    def wordPattern(self, p, s):
+
+        w = s.split()
+        if len(p) != len(w):
+            return False
+        d1 = {}
+        d2 = {}
+
+        for i in range(len(p)):
+            if p[i] in d1:
+
+                if d1[p[i]] != w[i]:
+                    return False
+            else:
+                d1[p[i]] = w[i]
+
+            if w[i] in d2:
+
+                if d2[w[i]] != p[i]:
+                    return False
+            else:
+                d2[w[i]] = p[i]
+
+        return True
+
+# 2390. Removing Stars From a String
+class Solution(object):
+    def removeStars(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        stack= []
+        for ch in s:
+            if ch == '*':
+                stack.pop()
+            else:
+                stack.append(ch)
+        return "".join(stack)
