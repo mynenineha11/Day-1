@@ -1,0 +1,267 @@
+# 692. Top K Frequent Words
+class Solution:
+    def topKFrequent(self, words, k):
+
+        d = {}
+        for w in words:
+            d[w] = d.get(w, 0) + 1
+        ans = []
+
+        while k > 0:
+            maximum = -1
+            word = ""
+            for w in d:
+
+                if d[w] > maximum:
+                    maximum = d[w]
+                    word = w
+
+                elif d[w] == maximum and w < word:
+                    word = w
+
+            ans.append(word)
+            del d[word]
+            k -= 1
+
+        return ans
+
+# 3121. Count the Number of Special Characters II
+class Solution:
+    def numberOfSpecialChars(self, word: str) -> int:
+        l = {}
+        u = {}
+        c = 0
+        for i , ch in enumerate(word):
+            if ch.islower():
+                l[ch] = i
+            elif ch not in u:
+                u[ch] = i
+        for ch in l:
+            if ch.upper() in u:
+                if l[ch] < u[ch.upper()]:
+                    c += 1
+        
+        return c
+        
+# 1160. Find Words That Can Be Formed by Characters
+class Solution:
+    def countCharacters(self, words: List[str], chars: str) -> int:
+        d = {}
+        for ch in chars:
+            d[ch] = d.get(ch, 0) + 1
+        res = 0
+        flag = False
+        for word in words:
+            t = {}
+            for ch in word:
+                t[ch] = t.get(ch, 0) + 1
+            flag = True
+            for ch in t:
+                if t[ch] > d.get(ch, 0):
+                    flag = False
+                    break
+            if flag:
+                res += len(word)
+        return res
+
+# Stack
+# follows LIFO 
+# In python it is implemented using list
+# methods in stack - append(), pop(), st[-1] (for top ele), not stack (check stack is not empty)
+
+# 20. Valid Parentheses
+class Solution:
+    def isValid(self, s: str) -> bool:
+        d = {
+            ')' : '(',
+            '}' : '{',
+            ']' : '[',
+        }
+        stack = []
+        for ch in s:
+            if ch in "[({":
+                stack.append(ch)
+            else:
+                if not stack:
+                    return False
+                    
+                elif stack[-1] != d[ch]:
+                    return False
+                
+                stack.pop()
+        
+        return len(stack) == 0
+
+# 844. Backspace String Compare
+class Solution:
+    def backspaceCompare(self, s: str, t: str) -> bool:
+        def bacspace(string):
+            stack = []
+            for ch in string:
+                if ch != '#':
+                    stack.append(ch)
+                elif stack:
+                    stack.pop()
+                
+            return "".join(stack)
+        
+        return bacspace(s) == bacspace(t)
+
+# 682. Baseball Game
+class Solution:
+    def calPoints(self, operations: List[str]) -> int:
+        stack = []
+        for op in operations:
+            if op == 'C':
+                stack.pop()
+            elif op == 'D':
+                stack.append(2 * stack[-1])
+            elif op == '+':
+                stack.append(stack[-1] + stack[-2])
+            else:
+                stack.append(int(op))
+        
+        return sum(stack)
+
+# 1047. Remove All Adjacent Duplicates In String
+class Solution(object):
+    def removeDuplicates(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        stack = []
+        for ch in s:
+            if stack and stack[-1] == ch:
+                stack.pop()
+            else:
+                stack.append(ch)
+
+        return "".join(stack)
+
+# 1544. Make The String Great
+class Solution(object):
+    def makeGood(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        stack = []
+        for ch in s:
+            if stack and abs((ord(stack[-1]) - ord(ch))) == 32:
+                stack.pop()
+            else:
+                stack.append(ch)
+        return "". join(stack)
+
+# 496. Next Greater Element I
+class Solution(object):
+    def nextGreaterElement(self, nums1, nums2):
+
+        stack = []
+        d = {}
+
+        for n in nums2:
+
+            while stack and n > stack[-1]:
+                d[stack.pop()] = n
+
+            stack.append(n)
+
+        while stack:
+            d[stack.pop()] = -1
+
+        ans = []
+
+        for n in nums1:
+            ans.append(d[n])
+
+        return ans
+
+# 739. Daily Temperatures
+class Solution(object):
+    def dailyTemperatures(self, temperatures):
+
+        n = len(temperatures)
+
+        ans = [0] * n
+
+        stack = []
+
+        for i in range(n):
+
+            while stack and temperatures[i] > temperatures[stack[-1]]:
+
+                idx = stack.pop()
+
+                ans[idx] = i - idx
+
+            stack.append(i)
+
+        return ans
+
+# 150. Evaluate Reverse Polish Notation
+class Solution(object):
+    def evalRPN(self, tokens):
+
+        stack = []
+
+        for t in tokens:
+
+            if t not in "+-*/":
+
+                stack.append(int(t))
+
+            else:
+
+                b = stack.pop()
+                a = stack.pop()
+
+                if t == "+":
+                    stack.append(a + b)
+
+                elif t == "-":
+                    stack.append(a - b)
+
+                elif t == "*":
+                    stack.append(a * b)
+
+                else:
+                    stack.append(int(float(a) / b))
+
+        return stack[0]
+
+# 1021. Remove Outermost Parentheses
+class Solution:
+    def removeOuterParentheses(self, s: str) -> str:
+        count = 0
+        res = ""
+
+        for ch in s:
+            if ch == '(':
+                if count > 0:
+                    res += ch
+                count += 1
+            else:
+                count -= 1
+                if count > 0:
+                    res += ch
+        return res
+
+# 3174. Clear Digits
+class Solution(object):
+    def clearDigits(self, s):
+
+        stack = []
+
+        for ch in s:
+
+            if ch.isdigit():
+
+                stack.pop()
+
+            else:
+
+                stack.append(ch)
+
+        return "".join(stack)
