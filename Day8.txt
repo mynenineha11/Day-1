@@ -1,0 +1,104 @@
+# 1614. Maximum Nesting Depth of the Parentheses
+class Solution:
+    def maxDepth(self, s: str) -> int:
+        stack = []
+        res = 0
+        
+        for ch in s:
+            if ch == '(':
+                stack.append(ch)
+                res = max(res, len(stack))
+            
+            elif ch == ')':
+                stack.pop()
+        return res
+
+# 1475. Final Prices With a Special Discount in a Shop
+class Solution:
+    def finalPrices(self, prices: List[int]) -> List[int]:
+        stack = []
+        for i in range(len(prices)):
+            while stack and prices[i] <= prices[stack[-1]]:
+                idx = stack.pop()
+                prices[idx] -= prices[i]
+            stack.append(i)
+        return prices
+
+# 402. Remove K Digits
+class Solution:
+    def removeKdigits(self, num: str, k: int) -> str:
+
+        stack = []
+        for ch in num:
+            while stack and k > 0 and stack[-1] > ch:
+                stack.pop()
+                k -= 1
+            stack.append(ch)
+
+        while k > 0:
+            stack.pop()
+            k -= 1
+
+        res = "".join(stack).lstrip("0")
+
+        return res if res else "0"
+        
+# 1190. Reverse Substrings Between Each Pair of Parentheses
+class Solution:
+    def reverseParentheses(self, s: str):
+        stack = []
+
+        for ch in s:
+            if ch == ')':
+                temp = []
+                while stack[-1] != '(':
+                    temp.append(stack.pop())
+                stack.pop()
+                stack.extend(temp)
+            else:
+                stack.append(ch)
+        return "".join(stack)
+
+# 1700. Number of Students Unable to Eat Lunch
+from collections import deque
+
+class Solution(object):
+    def countStudents(self, students, sandwiches):
+
+        q = deque(students)
+        i = 0
+        while q:
+            rotations = 0
+            size = len(q)
+            while rotations < size:
+                if q[0] == sandwiches[i]:
+                    q.popleft()
+                    i += 1
+                    break
+                else:
+                    q.append(q.popleft())
+                    rotations += 1
+            if rotations == size:
+                return len(q)
+        return 0
+    
+# 2073. Time Needed to Buy Tickets
+from collections import deque
+
+class Solution(object):
+    def timeRequiredToBuy(self, tickets, k):
+
+        q = deque()
+        for i in range(len(tickets)):
+            q.append([tickets[i], i])
+        time = 0
+        while q:
+            ticket, idx = q.popleft()
+            ticket -= 1
+            time += 1
+            if ticket == 0:
+                if idx == k:
+                    return time
+            else:
+                q.append([ticket, idx])
+        
