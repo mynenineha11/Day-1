@@ -1,0 +1,262 @@
+# 75. Sort Colors
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        low = 0
+        mid = 0
+        high = len(nums) - 1
+
+        while mid <= high:
+            if nums[mid] == 0:
+                nums[low], nums[mid] = nums[mid], nums[low]
+                low += 1
+                mid += 1
+
+            elif nums[mid] == 1:
+                mid += 1
+
+            else:
+                nums[mid], nums[high] = nums[high], nums[mid]
+                high -= 1
+
+# 88. Merge Sorted Array
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+
+        i = m - 1
+        j = n - 1
+        k = m + n - 1
+
+        while i >= 0 and j >= 0:
+
+            if nums1[i] > nums2[j]:
+                nums1[k] = nums1[i]
+                i -= 1
+
+            else:
+
+                nums1[k] = nums2[j]
+                j -= 1
+            k -= 1
+
+        while j >= 0:
+            nums1[k] = nums2[j]
+            j -= 1
+            k -= 1
+
+# 876. Middle of the Linked List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        p1 = head
+        p2 = head
+
+        while p2 and p2.next:
+            p1 = p1.next
+            p2 = p2.next.next
+
+        return p1
+
+# 41. First Missing Positive
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        s = set(nums)
+        i = 1
+        while True:
+            if i not in s:
+                return i
+            i += 1
+
+# 141. Linked List Cycle
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        slow = head
+        fast = head
+
+        while fast and fast.next:
+
+            slow = slow.next
+            fast = fast.next.next
+
+            if slow == fast:
+                return True
+
+        return False
+
+# 206. Reverse Linked List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        prev = None
+        curr = head
+
+        while curr:
+            nextNode = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nextNode
+
+        return prev
+
+# 19. Remove Nth Node From End of List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def removeNthFromEnd(self, head, n):
+
+        dummy = ListNode(0)
+        dummy.next = head
+
+        slow = dummy
+        fast = dummy
+
+        for i in range(n + 1):
+            fast = fast.next
+
+        while fast:
+
+            slow = slow.next
+            fast = fast.next
+
+        slow.next = slow.next.next
+
+        return dummy.next
+
+# 160. Intersection of Two Linked Lists
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        h1 = headA
+        h2 = headB
+        while h1 != h2:
+            if h1:
+                h1 = h1.next
+            else:
+                h1 = headB
+
+            if h2:
+                h2 = h2.next
+            else:
+                h2 = headA
+        return h1
+
+# 83. Remove Duplicates from Sorted List
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        curr = head
+        while curr and curr.next:
+            if curr.val == curr.next.val:
+                curr.next = curr.next.next
+            else:
+                curr = curr.next
+        return head
+
+# 21. Merge Two Sorted Lists
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def mergeTwoLists(self, list1, list2):
+
+        dummy = ListNode(0)
+        temp = dummy
+
+        while list1 and list2:
+            if list1.val <= list2.val:
+                temp.next = list1
+                list1 = list1.next
+            else:
+                temp.next = list2
+                list2 = list2.next
+            temp = temp.next
+        if list1:
+            temp.next = list1
+        else:
+            temp.next = list2
+
+        return dummy.next
+
+# 2. Add Two Numbers
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def addTwoNumbers(self, l1, l2):
+
+        dummy = ListNode(0)
+        temp = dummy
+
+        carry = 0
+
+        while l1 or l2 or carry:
+
+            total = carry
+
+            if l1:
+                total += l1.val
+                l1 = l1.next
+
+            if l2:
+                total += l2.val
+                l2 = l2.next
+
+            carry = total // 10
+
+            temp.next = ListNode(total % 10)
+            temp = temp.next
+
+        return dummy.next
+
+# 203. Remove Linked List Elements
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
+        dummy = ListNode(0)
+        dummy.next = head
+        curr = dummy
+        while curr.next:
+            if curr.next.val == val:
+                curr.next = curr.next.next
+            else:
+                curr = curr.next
+        return dummy.next
