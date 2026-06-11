@@ -1,0 +1,171 @@
+# 98. Validate Binary Search Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        arr = []
+        def inorder(node):
+            if node:
+                inorder(node.left)
+                arr.append(node.val)
+                inorder(node.right)
+        inorder(root)
+        for i in range(1, len(arr)):
+
+            if arr[i] <= arr[i-1]:
+                return False
+
+        return True
+
+# 104. Maximum Depth of Binary Tree
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        q=[root]
+        level = 0
+        while q:
+            for i in range(len(q)):
+                ele = q.pop(0)
+                if ele.left:
+                    q.append(ele.left)
+                if ele.right:
+                    q.append(ele.right)
+            level += 1
+        return level
+
+# 997. Find the Town Judge
+class Solution:
+    def findJudge(self, n: int, trust: List[List[int]]) -> int:
+        freq = [0] * (n+1)
+        for a, b in trust:
+            freq[a] -= 1
+            freq[b] += 1
+
+        for i in range(1, n+1):
+            if freq[i] == n-1:
+                return i
+
+        return -1
+
+
+# 1971. Find if Path Exists in Graph
+class Solution:
+    def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+        graph = {}
+
+        for u, v in edges:
+            if u not in graph:
+                graph[u] = []
+
+            if v not in graph:
+                graph[v] = []
+
+            graph[u].append(v)
+            graph[v].append(u)
+
+        visited = set()
+
+        def dfs(node):
+            if node == destination:
+                return True
+
+            visited.add(node)
+            for nei in graph[node]:
+                if nei not in visited:
+                    if dfs(nei):
+                        return True
+
+            return False
+
+        return dfs(source)
+
+# 1791. Find Center of Star Graph
+class Solution:
+    def findCenter(self, edges: List[List[int]]) -> int:
+        a, b = edges[0]
+        c, d = edges[1]
+        if a == c or a == d:
+            return a
+        return b
+
+# 547. Number of Provinces
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        n = len(isConnected)
+        v = set()
+        def dfs(city):
+            v.add(city)
+            for nei in range(n):
+                if isConnected[city][nei] == 1 and nei not in v:
+                    dfs(nei)
+        prov = 0
+        for city in range(n):
+            if city not in v:
+                prov += 1
+                dfs(city)
+        return prov
+
+
+# 841. Keys and Rooms
+class Solution:
+    def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
+        v = set([0])
+        q = [0]
+        while q:
+            r = q.pop(0)
+            for key in rooms[r]:
+                if key not in v:
+                    v.add(key)
+                    q.append(key)
+        return len(v) == len(rooms)
+
+# 455. Assign Cookies
+class Solution:
+    def findContentChildren(self, g: List[int], s: List[int]) -> int:
+        s.sort()
+        g.sort()
+
+        i = 0
+        j = 0
+        while i < len(g) and j < len(s):
+            if s[j] >= g[i]:
+                i += 1
+            j += 1
+
+        return i
+
+# BFS for graph
+def bfs(start, graph):
+    q = [start]
+    v = set()
+    v.add(start)
+    while q:
+        node = q.pop(0)
+        print(node)
+        for n in graph[node]:
+            if n not in v:
+                v.add(n)
+                q.append(n)
+
+
+# DFS for graph
+def dfs(start, graph):
+    v = set()
+    def func(node):
+        v.add(node)
+        print(node)
+        for n in graph[node]:
+            if n not in v:
+                func(n)
+    func(start)
