@@ -1,0 +1,216 @@
+# 643. Maximum Average Subarray I
+class Solution:
+    def findMaxAverage(self, nums: List[int], k: int) -> float:
+        wsum = sum(nums[:k])
+        msum = wsum
+        for i in range(k, len(nums)):
+            wsum += nums[i] - nums[i-k]
+            msum = max(msum, wsum)
+        return msum / k
+
+# 1456. Maximum Number of Vowels in a Substring of Given Length
+class Solution:
+    def maxVowels(self, s: str, k: int) -> int:
+        vowels = "AEIOUaeiou"
+        c = 0
+        for i in range(k):
+            if s[i] in vowels:
+                c += 1
+        res = c
+        for i in range(k, len(s)):
+            if s[i] in vowels:
+                c += 1
+            
+            if s[i-k] in vowels:
+                c -= 1
+            
+            res = max(res, c)
+        return res
+
+# 485. Max Consecutive Ones
+class Solution:
+    def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
+        count = 0
+        res = 0
+        for i in nums:
+            if i == 1:
+                count += 1
+                res = max(res, count)
+            else:
+                count = 0 
+        
+        return res
+
+# 3. Longest Substring Without Repeating Characters
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        sn = set()
+        i = 0
+        res = 0
+        for j in range(len(s)):
+            while s[j] in sn:
+                sn.remove(s[i])
+                i += 1
+            sn.add(s[j])
+            res = max(res, j-i+1)
+        return res
+
+# 219. Contains Duplicate II
+class Solution:
+    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+        mp = {}
+
+        for i in range(len(nums)):
+
+            if nums[i] in mp and i - mp[nums[i]] <= k:
+                return True
+
+            mp[nums[i]] = i
+
+        return False
+
+# 198. House Robber
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return nums[0]
+
+        a = 0
+        b = 0
+
+        for num in nums:
+            curr = max(a, num + b)
+            b = a
+            a = curr
+
+        return a
+
+# 70. Climbing Stairs
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        
+        if n <= 2:
+            return n
+
+        a = 1
+        b = 2
+
+        for i in range(3, n + 1):
+            c = a + b
+            a = b
+            b = c
+
+        return b
+
+# maximum sum using 2 forloop fo a window of size k
+arr = [3, 1, 2, 5, 4, 7, 1]
+k = 3
+n = len(arr)
+msum = 0
+for i in range(0, n-k+1):
+    s = 0
+    for j in range(i, i+k):
+        s += arr[j]
+    msum = max(msum, s)
+print(msum)
+
+# using sliding window method
+def Swindow(arr, k):
+    wsum = sum(arr[:k])
+    msum = wsum
+    for i in range(k, len(arr)):
+        wsum += arr[i] - arr[i-k]
+        msum = max(msum, wsum)
+    return msum
+arr = [3, 1, 2, 5, 4, 7, 1]
+k = 3
+print(Swindow(arr, k))
+
+# find the first negative number in a window of size k
+def NegativeNum(arr, k):
+    res = []
+    for i in range(0, len(arr)-k+1):
+        num = 0
+        for j in range(i, i+k):
+            if arr[j] < 0:
+                num = arr[j]
+                break
+        
+        res.append(num)
+    return res
+
+    
+arr = [-1, 5, -1, -7, 20, 13, 15, -1]
+k = 3
+print(NegativeNum(arr, k))
+
+# Fibonacci
+# 1. Memoization (Top-Down DP)
+def fib(n, dp):
+
+    if n <= 1:
+        return n
+
+    if dp[n] != -1:
+        return dp[n]
+
+    dp[n] = fib(n - 1, dp) + fib(n - 2, dp)
+
+    return dp[n]
+
+
+n = 5
+dp = [-1] * (n + 1)
+
+print(fib(n, dp))
+
+# 2. Space Optimization (Bottom-Up DP)
+def fib(n):
+
+    if n <= 1:
+        return n
+
+    prev2 = 0
+    prev1 = 1
+
+    for i in range(2, n + 1):
+
+        curr = prev1 + prev2
+
+        prev2 = prev1
+        prev1 = curr
+
+    return prev1
+
+
+print(fib(5))
+
+# 3. Pure Recursion
+def fib(n):
+
+    if n <= 1:
+        return n
+
+    return fib(n - 1) + fib(n - 2)
+
+
+print(fib(5))
+
+# 4. Tabulation (Bottom-Up DP)
+def fib(n):
+
+    if n <= 1:
+        return n
+
+    dp = [0] * (n + 1)
+
+    dp[0] = 0
+    dp[1] = 1
+
+    for i in range(2, n + 1):
+        dp[i] = dp[i - 1] + dp[i - 2]
+
+    return dp[n]
+
+
+print(fib(5))
